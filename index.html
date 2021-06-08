@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+		<title>有餘數的除法</title>
+		
+		<style type="text/css">
+			.question{
+				display: flex;
+				justify-content: center;
+			}
+			
+			
+			.QueText{
+				text-align: center;
+				font-size: 20px;
+				margin-top: 5px;
+				margin-Bottom: 5px;
+				background-color: #EDEDED;
+				border-style: solid;
+				border-width: 1px;
+				height: 45px;
+				width: 300px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 15px;
+			}
+			
+			.QueTextError{
+				text-align: center;
+				font-size: 20px;
+				margin-top: 5px;
+				margin-Bottom: 5px;
+				background-color: #FFCCCC;
+				border-width: 1px;
+				border-style: solid;
+				height: 45px;
+				width: 300px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 15px;
+				
+			}
+			
+			.QueTextTrue{
+				text-align: center;
+				font-size: 20px;
+				margin-top: 5px;
+				margin-Bottom: 5px;
+				background-color: #CCFF99;
+				border-width: 1px;
+				border-style: solid;
+				height: 45px;
+				width: 300px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 15px;
+			}
+			
+			.inputAns{
+				width: 45px;
+				height: 25px;
+				font-size: 16px;
+				text-align: center;
+				outline: none;
+			}
+			
+			.inputAns:focus{
+				border-color: black;
+				border-style: solid;
+			}
+			
+			#score{
+				width: 90px;
+				height: 40px;
+				background-color: #CCCCFF;
+				border-style: solid;
+				border-color: #fff;
+				margin-top: 10px;
+			}
+			
+			#score:hover{
+				background-color: #5555FF;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div style="font-size: 40px;text-align:center">有餘數的除法</div>
+		<div style="font-size: 40px;text-align:center">作者:小李</div>
+		<br>
+	</body>
+	<script type="text/javascript">
+		var firstNum = new Array(10);
+		var secondNum = new Array(10);
+		var unit = 0;
+		
+		for(var i=0; i<10; i++){
+			firstNum[i] = getRandomInt(79)+20;
+			secondNum[i] = getRandomInt(7)+2;
+			
+			
+			document.write("<div class='question'><div class='QueText'>"
+			+"("+(i+1)+")&nbsp&nbsp&nbsp"+
+			+ firstNum[i] +"&nbsp&nbsp÷&nbsp&nbsp"
+			+ secondNum[i] + "&nbsp&nbsp=&nbsp&nbsp"
+			+"<input type='text' class='inputAns' />"
+			+"&nbsp····&nbsp"
+			+"<input type='text' class='inputAns' />"
+			+"</div></div>");
+		}
+		
+		document.write("<div style='text-align:center;'><input type='button' value='按我交卷' id='score'/></div>");
+		
+		var youWrite = Array(20); //考生寫的答案
+		var restart = false;  // 判斷第幾次按按鈕
+		var inputArray = document.getElementsByClassName('inputAns'); //取得學生輸入數字
+		var quesArray = document.getElementsByClassName('question'); //取得題目內容
+		
+		
+		score.addEventListener('click',
+		function(e){
+			for(var i=0; i<10; i++){
+				youWrite[2*i] =  parseInt(inputArray[2*i].value);  //先儲存資料
+				youWrite[2*i+1] =  parseInt(inputArray[2*i+1].value);  //先儲存資料
+				
+				console.log(youWrite[2*i]+","+youWrite[2*i+1]);
+				console.log(secondNum[i]*youWrite[i*2]+youWrite[i*2+1]);
+				
+				
+				
+				if(firstNum[i] == (secondNum[i]*youWrite[i*2]+youWrite[i*2+1]) && secondNum[i]>youWrite[2*i+1]){
+					
+					quesArray[i].innerHTML = ("<div class='QueTextTrue'>"
+						+"("+(i+1)+")&nbsp&nbsp&nbsp"+
+						+ firstNum[i] +"&nbsp&nbsp÷&nbsp&nbsp"
+						+ secondNum[i] + "&nbsp&nbsp=&nbsp&nbsp"
+						+"<input type='text' class='inputAns' />"
+						+"&nbsp····&nbsp"
+						+"<input type='text' class='inputAns' />"
+						+"</div></div>");
+				}else{
+					trueResult = firstNum[i]*secondNum[i];
+					quesArray[i].innerHTML = ("<div class='QueTextError'>"
+						+"("+(i+1)+")&nbsp&nbsp&nbsp"+
+						+ firstNum[i] +"&nbsp&nbsp÷&nbsp&nbsp"
+						+ secondNum[i] + "&nbsp&nbsp=&nbsp&nbsp"
+						+"<input type='text' class='inputAns' />"
+						+"&nbsp····&nbsp"
+						+"<input type='text' class='inputAns' />"
+						+"</div></div>");	
+				}
+				
+				if(isNaN(youWrite[2*i])){
+					youWrite[2*i] = "";
+				}
+				if(isNaN(youWrite[2*i+1])){
+					youWrite[2*i+1] = "";
+				}
+				
+				inputArray[2*i].value = youWrite[2*i];
+				inputArray[2*i+1].value = youWrite[2*i+1];
+			}
+			
+			score.value = "重出題目";
+			if(restart == true){
+				window.location.reload();
+			}
+			restart = true;
+		},false);
+		
+		
+		function getRandomInt(max) {
+			return Math.floor(Math.random() * max);
+		}
+			
+	</script>
+</html>
+
+
+
+
